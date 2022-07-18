@@ -1,5 +1,8 @@
 # docker .env
 .env
 
-./MariaDB
-./node_modules
+# DB
+MariaDB
+
+# nodejs module
+node_modules
