@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+  arduino_node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: Arduino_NodeJS
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=Asia/Seoul
+      - USER=${USER}
+      - PASSWD=${PASSWD}
+      - DBNAME=${DBNAME}
+    depends_on:
+      - arduino_mariadb
+  
+  arduino_mariadb:
+    image: mariadb:10.6
+    container_name: Arduino_MariaDB
+    tty: true
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${ROOTPASSWD}
+      - MYSQL_DATABASE=${DBNAME}
+      - MYSQL_USER=${USER}
+      - MYSQL_PASSWORD=${PASSWD}
+      - TZ=Asia/Seoul
+    volumes:
+      - ./MariaDB:/var/lib/mysql
+      - ./db/:/docker-entrypoint-initdb.d
+
