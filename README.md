@@ -1,2 +1,0 @@
-# docker-nodejs
-arduino project
